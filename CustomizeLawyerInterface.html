@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html ng-app="MainModule">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dynatable/0.3.1/jquery.dynatable.css">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.3/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Dynatable/0.3.1/jquery.dynatable.js"></script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
+
+
+
+
+<meta charset="UTF-8">
+
+
+
+<title>Letter of Demand Lawyer Attendance Detail</title>
+</head>
+<body ng-controller="MainController">
+<div class="container">
+
+    <div class="page-header">
+        <h2 class="text-info">Lawyer Details Management</h2>
+    </div>
+    <div class="well well-lg">
+        <div class="container-fluid">
+            <h3><strong>Add or edit lawyer details</strong></h3>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input class="form-control" ng-model="LawyerDetails.Name">
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-6" >
+                        <div class="form-group">
+                            <label>Telephone</label>
+                            <input class="form-control" ng-model="LawyerDetails.Telephone">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+
+
+                        <div class="form-group">
+
+                            <div >
+                                <label style="margin-right: 5%">Availability</label>
+                                <label class="radio-inline"><input type="radio" value="Yes" name="availability" ng-model="LawyerDetails.Availability">Yes</label>
+                                <label class="radio-inline"><input type="radio" value="No" name="availability" ng-model="LawyerDetails.Availability">No</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+
+                            <label>Product Type</label><br>
+
+
+                            <div class="checkbox">
+                                <label class="checkbox-inline "><input type="checkbox" value="Yes" name="Cards" ng-model="LawyerDetails.ProductType1">Cards</label><br>
+                                <label class="checkbox-inline "><input type="checkbox" value="Yes" name="Housing_Loans" ng-model="LawyerDetails.ProductType2">Housing_Loans</label><br>
+                                <label class="checkbox-inline "><input type="checkbox" value="Yes" name="Personal_Loans" ng-model="LawyerDetails.ProductType3">Personal_Loans</label><br>
+                                <label class="checkbox-inline "><input type="checkbox" value="Yes" name="Auto_Loans" ng-model="LawyerDetails.ProductType4">Auto_Loans</label><br>
+                                <label class="checkbox-inline"><input type="checkbox" value="Yes" name="Branch_Credit" ng-model="LawyerDetails.ProductType5">Branch_Credit</label>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group pull-right">
+                        <button class="btn btn-success" id="add" ng-click="AddLawyers()" >Add</button>
+                        <button class="btn btn-warning" id="update" ng-click="UpdateTable()" onclick="enableAddButton()"  disabled>Update</button>
+                        <button class="btn btn-warning" id="clear" ng-click="clearData()" onclick="enableAddButton()"  >Clear</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-header">
+        <h3> <strong>View lawyer details</strong></h3>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover" id="data-table">
+
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Product Type</th>
+                        <th>Availability</th>
+                        <th>Phone Number</th>
+                        <th class="text-center">Action</th>
+                    </tr>
+
+
+
+                    <tr ng-repeat="lawyer in lawyers | filter: { Status: 'Approved' }">
+                        <td>{{lawyer.No}}</td>
+                        <td>{{lawyer.Name}}</td>
+                        <td>{{lawyer.ProductType}}</td>
+                        <td>{{lawyer.Availability}}</td>
+                        <td>{{lawyer.Telephone}}</td>
+                        <td class="text-center">
+                            <button  class="btn btn-warning btn-sm" ng-click="EditData(lawyer)" onclick="enableUpdateButtons()" >Edit <span class="glyphicon glyphicon-pencil"></span></button>
+                            <button  class="btn btn-danger btn-sm" ng-click="DeleteData(lawyer)">Delete <span class="glyphicon glyphicon-trash"></span></button>
+                        </td>
+                    </tr>
+
+
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="page-header">
+        <h3> <strong>Pending Approvals</strong></h3>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Product Type</th>
+                        <th>Availability</th>
+                        <th>Phone Number</th>
+                        <th>Action Type</th>
+                    </tr>
+
+
+
+                    <tr ng-repeat="lawyer in lawyers | filter: { Status: 'Pending Approval' } ">
+                        <td>{{lawyer.No}}</td>
+                        <td>{{lawyer.Name}}</td>
+                        <td>{{lawyer.ProductType}}</td>
+                        <td>{{lawyer.Availability}}</td>
+                        <td>{{lawyer.Telephone}}</td>
+                        <td>{{lawyer.ActionType}}</td>
+                    </tr>
+
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // $('#data-table').dynatable();
+    // $('#multi-drop').selectize();
+
+
+    function enableUpdateButtons() {
+        document.getElementById("update").disabled = false;
+        document.getElementById("add").disabled = true;
+    }
+
+
+
+    function enableAddButton() {
+        document.getElementById("add").disabled = false;
+        document.getElementById("update").disabled = true;
+    }
+
+</script>
+
+
+
+</body>
+
+<script>
+    angular.module("MainModule",[]).controller("MainController",function ($scope){
+
+        $scope.lawyers= [
+            {"No":"1","Name":"Janaka Chathuranga","Availability":"Yes","ProductType":"Cards","Telephone":"011223344556","Address":"Colombo","Status":"Approved"},
+            {"No":"2","Name":"Mekala Rashmika","Availability":"No","ProductType":"Personal_Loans","Telephone":"011223344556","Address":"Colombo","Status":"Approved"},
+            {"No":"3","Name":"Yoshani Kavindya","Availability":"No","ProductType":"Branch_Credit","Telephone":"011223344556","Address":"Colombo","Status":"Approved"},
+            {"No":"4","Name":"Hashan Buddhima","Availability":"Yes","ProductType":"Auto_Loans","Telephone":"011223344556","Address":"Colombo","Status":"Approved"},
+            {"No":"5","Name":"Ashani Dikowita","Availability":"No","ProductType":"Cards","Telephone":"011223344556","Address":"Colombo","Status":"Approved"},
+            {"No":"6","Name":"Janaka Chathuranga","Availability":"Yes","ProductType":"Housing_Loans","Telephone":"011223344556","Address":"Colombo","Status":"Approved"}
+        ];
+
+
+
+        //Add lawyer to the table
+        $scope.buttonStatus = false;
+        $scope.TempObj={};
+        $scope.EditedData={};
+
+        $scope.AddLawyers=function () {
+
+            if($scope.LawyerDetails.ProductType1 && $scope.LawyerDetails.Name!=null && $scope.LawyerDetails.Telephone!=null &&  $scope.LawyerDetails.Availability!=null){
+
+                $scope.TempObj={
+                    "No":Date.now(),
+                    "Name":$scope.LawyerDetails.Name,
+                    "Availability":$scope.LawyerDetails.Availability,
+                    "ProductType": "Cards",
+                    "Telephone":$scope.LawyerDetails.Telephone,
+                    "Status":"Pending Approval",
+                    "ActionType":"New Record",
+                    "id":$scope.lawyers.length+1
+                };
+                console.log( $scope.TempObj);
+                $scope.lawyers.push($scope.TempObj);
+            }
+
+            if($scope.LawyerDetails.ProductType2 && $scope.LawyerDetails.Name!=null && $scope.LawyerDetails.Telephone!=null  && $scope.LawyerDetails.Availability!=null){
+
+                $scope.TempObj={
+                    "No":Date.now(),
+                    "Name":$scope.LawyerDetails.Name,
+                    "Availability":$scope.LawyerDetails.Availability,
+                    "ProductType": "Housing_Loans",
+                    "Telephone":$scope.LawyerDetails.Telephone,
+                    "Status":"Pending Approval",
+                    "ActionType":"New Record",
+                    "id":$scope.lawyers.length+1
+                };
+                console.log( $scope.TempObj);
+                $scope.lawyers.push($scope.TempObj);
+            }
+
+            if($scope.LawyerDetails.ProductType3 && $scope.LawyerDetails.Name!=null && $scope.LawyerDetails.Telephone!=null  && $scope.LawyerDetails.Availability!=null){
+
+                $scope.TempObj={
+                    "No":Date.now(),
+                    "Name":$scope.LawyerDetails.Name,
+                    "Availability":$scope.LawyerDetails.Availability,
+                    "ProductType": "Personal_Loans",
+                    "Telephone":$scope.LawyerDetails.Telephone,
+                    "Status":"Pending Approval",
+                    "ActionType":"New Record",
+                    "id":$scope.lawyers.length+1
+                };
+                console.log( $scope.TempObj);
+                $scope.lawyers.push($scope.TempObj);
+            }
+            if($scope.LawyerDetails.ProductType4 && $scope.LawyerDetails.Name!=null && $scope.LawyerDetails.Telephone!=null  && $scope.LawyerDetails.Availability!=null){
+
+                $scope.TempObj={
+                    "No":Date.now(),
+                    "Name":$scope.LawyerDetails.Name,
+                    "Availability":$scope.LawyerDetails.Availability,
+                    "ProductType": "Auto_Loans",
+                    "Telephone":$scope.LawyerDetails.Telephone,
+                    "Status":"Pending Approval",
+                    "ActionType":"New Record",
+                    "id":$scope.lawyers.length+1
+                };
+                console.log( $scope.TempObj);
+                $scope.lawyers.push($scope.TempObj);
+            }
+            if($scope.LawyerDetails.ProductType5 && $scope.LawyerDetails.Name!=null && $scope.LawyerDetails.Telephone!=null  && $scope.LawyerDetails.Availability!=null){
+
+                $scope.TempObj={
+                    "No":Date.now(),
+                    "Name":$scope.LawyerDetails.Name,
+                    "Availability":$scope.LawyerDetails.Availability,
+                    "ProductType": "Branch_Credit",
+                    "Telephone":$scope.LawyerDetails.Telephone,
+                    "Status":"Pending Approval",
+                    "ActionType":"New Record",
+                    "id":$scope.lawyers.length+1
+                };
+                console.log( $scope.TempObj);
+                $scope.lawyers.push($scope.TempObj);
+            }
+            $scope.LawyerDetails={};
+            // $scope.LawyerDetails.refreshItems();
+
+
+        }
+
+        $scope.clearData=function () {
+            $scope.LawyerDetails={};
+        }
+
+        //Delete lawyer from the table
+        $scope.DeleteData = function (val) {
+
+            val.Status="Pending Approval";
+            val.ActionType= "Delete Record";
+            console.log( val);
+            //val.ActionType = "Delete Record";
+            //$scope.lawyers.splice($scope.lawyers.indexOf(val),1);
+        }
+
+
+        //Edit data
+        $scope.EditData = function (val) {
+            //assign previous data before editing
+            $scope.EditedData = val;
+
+            $scope.LawyerDetails = {};
+            $scope.LawyerDetails.Name = val.Name;
+            $scope.LawyerDetails.Telephone = val.Telephone;
+            $scope.LawyerDetails.Availability = val.Availability;
+
+            console.log(val.ProductType);
+
+            if(val.ProductType=="Cards"){
+                $scope.LawyerDetails.ProductType1 = true;
+            }
+            if(val.ProductType=="Housing_Loans"){
+                $scope.LawyerDetails.ProductType2 = true;
+            }
+            if(val.ProductType=="Personal_Loans"){
+                $scope.LawyerDetails.ProductType3 = true;
+            }
+            if(val.ProductType=="Auto_Loans"){
+                $scope.LawyerDetails.ProductType4 = true;
+            }
+            if(val.ProductType=="Branch_Credit"){
+                $scope.LawyerDetails.ProductType5 = true;
+            }
+
+//                $scope.LawyerDetails.ProductType=[val.ProductType];
+            console.log($scope.LawyerDetails);
+        }
+
+        //Update the table
+        $scope.UpdateTable=function () {
+//
+//            if($scope.LawyerDetails.Name!=undefined){
+//                $scope.lawyers.splice($scope.lawyers.indexOf($scope.EditedData),1);
+//            }
+
+
+
+            if($scope.LawyerDetails.ProductType1 && $scope.LawyerDetails.Name!=null && $scope.LawyerDetails.Telephone!=null  && $scope.LawyerDetails.Availability!=null){
+
+                $scope.TempObj={
+                    "No":$scope.EditedData.No,
+                    "Name":$scope.LawyerDetails.Name,
+                    "Availability":$scope.LawyerDetails.Availability,
+                    "ProductType": "Cards",
+                    "Telephone":$scope.LawyerDetails.Telephone,
+                    "Status":"Pending Approval",
+                    "ActionType":"Updated Record"
+                };
+                console.log( $scope.TempObj);
+                $scope.lawyers.push($scope.TempObj);
+            }
+
+            if($scope.LawyerDetails.ProductType2 && $scope.LawyerDetails.Name!=null && $scope.LawyerDetails.Telephone!=null  && $scope.LawyerDetails.Availability!=null){
+
+                $scope.TempObj={
+                    "No":$scope.EditedData.No,
+                    "Name":$scope.LawyerDetails.Name,
+                    "Availability":$scope.LawyerDetails.Availability,
+                    "ProductType": "Housing_Loans",
+                    "Telephone":$scope.LawyerDetails.Telephone,
+                    "Status":"Pending Approval",
+                    "ActionType":"Updated Record"
+                };
+                console.log( $scope.TempObj);
+                $scope.lawyers.push($scope.TempObj);
+            }
+
+            if($scope.LawyerDetails.ProductType3 && $scope.LawyerDetails.Name!=null && $scope.LawyerDetails.Telephone!=null  && $scope.LawyerDetails.Availability!=null){
+
+                $scope.TempObj={
+                    "No":$scope.EditedData.No,
+                    "Name":$scope.LawyerDetails.Name,
+                    "Availability":$scope.LawyerDetails.Availability,
+                    "ProductType": "Personal_Loans",
+                    "Telephone":$scope.LawyerDetails.Telephone,
+                    "Status":"Pending Approval",
+                    "ActionType":"Updated Record"
+                };
+                console.log( $scope.TempObj);
+                $scope.lawyers.push($scope.TempObj);
+            }
+            if($scope.LawyerDetails.ProductType4 && $scope.LawyerDetails.Name!=null && $scope.LawyerDetails.Telephone!=null  && $scope.LawyerDetails.Availability!=null){
+
+                $scope.TempObj={
+                    "No":$scope.EditedData.No,
+                    "Name":$scope.LawyerDetails.Name,
+                    "Availability":$scope.LawyerDetails.Availability,
+                    "ProductType": "Auto_Loans",
+                    "Telephone":$scope.LawyerDetails.Telephone,
+                    "Status":"Pending Approval",
+                    "ActionType":"Updated Record"
+                };
+                console.log( $scope.TempObj);
+                $scope.lawyers.push($scope.TempObj);
+            }
+            if($scope.LawyerDetails.ProductType5 && $scope.LawyerDetails.Name!=null && $scope.LawyerDetails.Telephone!=null  && $scope.LawyerDetails.Availability!=null){
+
+                $scope.TempObj={
+                    "No":$scope.EditedData.No,
+                    "Name":$scope.LawyerDetails.Name,
+                    "Availability":$scope.LawyerDetails.Availability,
+                    "ProductType": "Branch_Credit",
+                    "Telephone":$scope.LawyerDetails.Telephone,
+                    "Status":"Pending Approval",
+                    "ActionType":"Updated Record"
+                };
+                console.log( $scope.TempObj);
+                $scope.lawyers.push($scope.TempObj);
+            }
+            $scope.LawyerDetails={};
+            // $scope.LawyerDetails.refreshItems();
+            console.log($scope.lawyers);
+        }
+
+
+        //print the final output
+        console.log($scope.lawyers);
+
+    });
+
+</script>
+</html>

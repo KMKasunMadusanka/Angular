@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html ng-app="MainModule">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dynatable/0.3.1/jquery.dynatable.css">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.3/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Dynatable/0.3.1/jquery.dynatable.js"></script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
+
+
+
+
+<meta charset="UTF-8">
+
+
+
+<title>Audit Table Status handling</title>
+</head>
+<body ng-controller="MainController">
+<div class="container">
+
+    <div class="page-header">
+        <h2 class="text-info">Audit Table Status handling</h2>
+    </div>
+    <div class="well well-lg">
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Account Number</label>
+                            <input class="form-control" ng-model="AuditData.AccountNo">
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-3" >
+                        <div class="form-group">
+                            <label>Current Status</label>
+                            <input class="form-control" ng-model="AuditData.Status" disabled>
+
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group">
+
+                           <br>
+
+
+                            <div class="checkbox">
+                                <label class="checkbox-inline "><input type="checkbox" value="Yes" name="changeStatus" ng-model="AuditData.pending" ng-click="getNotified(AuditData)">Change status to pending</label><br>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group pull-right">
+                        <button class="btn btn-success" id="save" ng-click="saveData(AuditData)" >Save Changers</button>
+                        <button class="btn btn-success" id="clear" ng-click="clearData()" >Clear</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-header">
+        <h3> <strong>Audit Table</strong></h3>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover" id="data-table">
+
+                    <tr>
+                        <th>AccountNo</th>
+                        <th>Name</th>
+                        <th>Process Type</th>
+                        <th>CIF</th>
+                        <th>Status</th>
+                    </tr>
+
+
+
+                    <tr ng-repeat="record in Audit | filter:AuditData:strict " ng-click="getTableData(record)" >
+                        <td>{{record.AccountNo}}</td>
+                        <td>{{record.Name}}</td>
+                        <td>{{record.ProcessType}}</td>
+                        <td>{{record.CIF}}</td>
+                        <td>{{record.Status}}</td>
+
+                    </tr>
+
+
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+
+
+
+</body>
+
+<script>
+    angular.module("MainModule",[]).controller("MainController",function ($scope){
+
+        $scope.Audit=
+
+            [
+
+                    {
+                        "Status":"Pass",
+                        "CIF":"N\/A",
+                        "ProcessType":"CARDNONWOFF",
+                        "@rid":"#861:235",
+                        "RemitAccNo":"N\/A",
+                        "AccountNo":"612226236119038",
+                        "OutstandingOnQualifiedDate":"N\/A",
+                        "NIC":"N\/A",
+                        "LODNoticeDate":"N\/A",
+                        "Name":"Mr Anushke Wasalamudalige Wasalamudali"
+                    },
+                    {
+                        "Status":"Pass",
+                        "CIF":"N\/A",
+                        "ProcessType":"CARDNONWOFF",
+                        "@rid":"#861:236",
+                        "RemitAccNo":"N\/A",
+                        "AccountNo":"643745107124113",
+                        "OutstandingOnQualifiedDate":"N\/A",
+                        "NIC":"N\/A",
+                        "LODNoticeDate":"N\/A",
+                        "Name":"Mr Thilina Benthara Arachchige Madusanka"
+                    },
+                    {
+                        "Status":"Pass",
+                        "CIF":"N\/A",
+                        "ProcessType":"CARDNONWOFF",
+                        "@rid":"#861:237",
+                        "RemitAccNo":"N\/A",
+                        "AccountNo":"637937256110730",
+                        "OutstandingOnQualifiedDate":"N\/A",
+                        "NIC":"N\/A",
+                        "LODNoticeDate":"N\/A",
+                        "Name":"Mr Anil Keerthisiri Mandalawaththage"
+                    },
+                    {
+                        "Status":"Pass",
+                        "CIF":"N\/A",
+                        "ProcessType":"CARDNONWOFF",
+                        "@rid":"#861:238",
+                        "RemitAccNo":"N\/A",
+                        "AccountNo":"642266263111341",
+                        "OutstandingOnQualifiedDate":"N\/A",
+                        "NIC":"N\/A",
+                        "LODNoticeDate":"N\/A",
+                        "Name":"Mr Chandradasa Don Radalage"
+                    },
+                    {
+                        "Status":"Pass",
+                        "CIF":"N\/A",
+                        "ProcessType":"CARDNONWOFF",
+                        "@rid":"#861:239",
+                        "RemitAccNo":"N\/A",
+                        "AccountNo":"545529195122458",
+                        "OutstandingOnQualifiedDate":"N\/A",
+                        "NIC":"N\/A",
+                        "LODNoticeDate":"N\/A",
+                        "Name":"Mr Ruwan Narasingha Dewage Gedara K Nawarathna"
+                    },
+                    {
+                        "Status":"Pass",
+                        "CIF":"N\/A",
+                        "ProcessType":"CARDNONWOFF",
+                        "@rid":"#861:240",
+                        "RemitAccNo":"N\/A",
+                        "AccountNo":"545529195122458",
+                        "OutstandingOnQualifiedDate":"N\/A",
+                        "NIC":"N\/A",
+                        "LODNoticeDate":"N\/A",
+                        "Name":"Mr Ruwan Narasingha Dewage Gedara K Nawarathna"
+                    },
+                    {
+                        "Status":"Pass",
+                        "CIF":"N\/A",
+                        "ProcessType":"CARDNONWOFF",
+                        "@rid":"#861:241",
+                        "RemitAccNo":"N\/A",
+                        "AccountNo":"644671320125752",
+                        "OutstandingOnQualifiedDate":"N\/A",
+                        "NIC":"N\/A",
+                        "LODNoticeDate":"N\/A",
+                        "Name":"Mr Sunil Mulugunage Premachandra"
+                    },
+                    {
+                        "Status":"Pass",
+                        "CIF":"N\/A",
+                        "ProcessType":"CARDNONWOFF",
+                        "@rid":"#861:242",
+                        "RemitAccNo":"N\/A",
+                        "AccountNo":"738399333127050",
+                        "OutstandingOnQualifiedDate":"N\/A",
+                        "NIC":"N\/A",
+                        "LODNoticeDate":"N\/A",
+                        "Name":"Mr Pamala Thelhawadi Gedara Wijesiri"
+                    },
+                    {
+                        "Status":"Pass",
+                        "CIF":"N\/A",
+                        "ProcessType":"CARDNONWOFF",
+                        "@rid":"#861:243",
+                        "RemitAccNo":"N\/A",
+                        "AccountNo":"643078347129161",
+                        "OutstandingOnQualifiedDate":"N\/A",
+                        "NIC":"N\/A",
+                        "LODNoticeDate":"N\/A",
+                        "Name":"Mr Heenatigala  Premadasa"
+                    },
+                    {
+                        "Status":"Pass",
+                        "CIF":"N\/A",
+                        "ProcessType":"CARDNONWOFF",
+                        "@rid":"#861:244",
+                        "RemitAccNo":"N\/A",
+                        "AccountNo":"767052099138865",
+                        "OutstandingOnQualifiedDate":"N\/A",
+                        "NIC":"N\/A",
+                        "LODNoticeDate":"N\/A",
+                        "Name":"Mr Sampath Gampathi Disawage Udayanga Wickramasingha"
+                    },
+                    {
+                        "Status":"Pass",
+                        "CIF":"N\/A",
+                        "ProcessType":"CARDNONWOFF",
+                        "@rid":"#861:245",
+                        "RemitAccNo":"N\/A",
+                        "AccountNo":"799869228133264",
+                        "OutstandingOnQualifiedDate":"N\/A",
+                        "NIC":"N\/A",
+                        "LODNoticeDate":"N\/A",
+                        "Name":"Mr Dusantha Angulmaduwa Gamage"
+                    },
+                    {
+                        "Status":"Pass",
+                        "CIF":"N\/A",
+                        "ProcessType":"CARDNONWOFF",
+                        "@rid":"#861:246",
+                        "RemitAccNo":"N\/A",
+                        "AccountNo":"750784029132432",
+                        "OutstandingOnQualifiedDate":"N\/A",
+                        "NIC":"N\/A",
+                        "LODNoticeDate":"N\/A",
+                        "Name":"Mr Kandiah Prasanna Kumara Subath"
+                    },
+                    {
+                        "Status":"Pass",
+                        "CIF":"N\/A",
+                        "ProcessType":"CARDNONWOFF",
+                        "@rid":"#861:247",
+                        "RemitAccNo":"N\/A",
+                        "AccountNo":"750784029132432",
+                        "OutstandingOnQualifiedDate":"N\/A",
+                        "NIC":"N\/A",
+                        "LODNoticeDate":"N\/A",
+                        "Name":"Mr Kandiah Prasanna Kumara Subath"
+                    },
+                    {
+                        "Status":"Pass",
+                        "CIF":"N\/A",
+                        "ProcessType":"CARDNONWOFF",
+                        "@rid":"#861:248",
+                        "RemitAccNo":"N\/A",
+                        "AccountNo":"226488061120343",
+                        "OutstandingOnQualifiedDate":"N\/A",
+                        "NIC":"N\/A",
+                        "LODNoticeDate":"N\/A",
+                        "Name":"Mrs Ramya Kanthi Sirisena"
+                    },
+                    {
+                        "Status":"Pass",
+                        "CIF":"N\/A",
+                        "ProcessType":"CARDNONWOFF",
+                        "@rid":"#861:249",
+                        "RemitAccNo":"N\/A",
+                        "AccountNo":"618821146126848",
+                        "OutstandingOnQualifiedDate":"N\/A",
+                        "NIC":"N\/A",
+                        "LODNoticeDate":"N\/A",
+                        "Name":"Mr Mohamed Abdul Hasan Nawaz"
+                    },
+                    {
+                        "Status":"Pass",
+                        "CIF":"N\/A",
+                        "ProcessType":"CARDNONWOFF",
+                        "@rid":"#861:250",
+                        "RemitAccNo":"N\/A",
+                        "AccountNo":"618821146126848",
+                        "OutstandingOnQualifiedDate":"N\/A",
+                        "NIC":"N\/A",
+                        "LODNoticeDate":"N\/A",
+                        "Name":"Mr Mohamed Abdul Hasan Nawaz"
+                    }
+
+            ]
+
+
+            $scope.updatedArray=[];
+            $scope.TempObj = {};
+ //load data when click the table raw
+            $scope.getTableData = function (auditRecord) {
+
+
+                $scope.AuditData = {};
+                $scope.TempObj = auditRecord;
+                $scope.AuditData.AccountNo = auditRecord.AccountNo;
+                $scope.AuditData.Status = auditRecord.Status;
+                $scope.AuditData.ProcessType=auditRecord.ProcessType;
+                $scope.AuditData.Name =auditRecord.Name;
+
+
+            }
+
+//change status when click the checkbox
+            $scope.getNotified = function (val) {
+
+                if($scope.AuditData.Status.length!=0  ){
+                    //$scope.AuditData.Status ="Pending";
+                    //$scope.Audit.Status ="Pending";
+                    console.log(val.Status);
+                    val.Status = "Pending";
+                    console.log(val);
+
+
+                    
+                    
+                }
+            }
+
+//Save the data
+
+            $scope.saveData = function (val) {
+
+
+                $scope.updatedArray.push(val);
+                console.log( $scope.updatedArray);
+
+                console.log($scope.TempObj);
+                $scope.Audit.splice($scope.Audit.indexOf($scope.TempObj),1);
+
+
+
+                //console.log($scope.Audit);
+
+                $scope.AuditData = {};
+            }
+
+//clear data from the table
+            $scope.clearData = function () {
+
+                $scope.AuditData = {};
+            }
+
+    });
+
+</script>
+</html>

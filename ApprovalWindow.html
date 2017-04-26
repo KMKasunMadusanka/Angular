@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html ng-app="MainModule">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dynatable/0.3.1/jquery.dynatable.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.3/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Dynatable/0.3.1/jquery.dynatable.js"></script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
+    <title>Approval Window</title>
+</head>
+<body ng-controller="MainController">
+
+
+<div class="container" >
+    <div class="page-header">
+        <h2 class="text-info">Lawyer Details Approval</h2>
+    </div>
+
+    <div class="col-md-12">
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" >
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Product Type</th>
+                    <th>Availability</th>
+                    <th>Phone Number</th>
+                    <th>Address</th>
+                    <th>Approval Status</th>
+                    <th>Approve</th>
+                </tr>
+                <tr ng-repeat="lawyer in lawyers | filter: { Status: 'Pending Approval' }">
+                    <td>{{lawyer.No}}</td>
+                    <td>{{lawyer.Name}}</td>
+                    <td>{{lawyer.ProductType}}</td>
+                    <td>{{lawyer.Availability}}</td>
+                    <td>{{lawyer.Telephone}}</td>
+                    <td>{{lawyer.Address}}</td>
+                    <td>{{lawyer.Status}}</td>
+                    <td>
+                        <div class="btn-group">
+                            <a class="btn btn-sm btn-success" href="#" ng-click="giveApprovalToOne(lawyer)">Approve</a>
+                            <a class="btn btn-sm btn-danger" href="#" ng-click="RejectApprovalToOne(lawyer)">Reject</a>
+                        </div>
+                    </td>
+                </tr>
+
+            </table>
+
+            <div class="col-md-12">
+                <div class="form-group pull-right">
+                    <button class="btn btn-warning" id="approveAll" ng-click="approveAll()">Approve All</button>
+                    <button class="btn btn-success" id="rejectAll" ng-click="RemoveAll()">Reject All</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+</body>
+<script>
+
+    angular.module("MainModule",[]).controller("MainController",function ($scope) {
+
+        $scope.lawyers = [
+            {
+                "Availability":"Yes",
+                "Status":"Pending Approval",
+                "No":"1",
+                "@rid":"#804:55",
+                "ActionType":"Delete Record",
+                "Address":"jhvujhgbjh,<br/>Colombo 11",
+                "Telephone":"0717656657",
+                "ProductType":"Cards",
+                "NoOfLetters":8,
+                "Name":"Selvadure Handeeban",
+                "$$hashKey":"object:13"
+            },
+            {
+                "Availability":"No",
+                "Status":"Approved",
+                "No":"2",
+                "@rid":"#804:56",
+                "ActionType":"",
+                "Address":"Kiribathgoda",
+                "Telephone":"111111111",
+                "ProductType":"Housing_Loans",
+                "NoOfLetters":null,
+                "Name":"Samira Madusanka",
+                "$$hashKey":"object:14"
+            },
+            {
+                "Availability":"Yes",
+                "Status":"Approved",
+                "No":"3",
+                "@rid":"#804:57",
+                "ActionType":"",
+                "Address":"Rajagiriya",
+                "Telephone":"0715566887",
+                "ProductType":"Personal_Loans",
+                "NoOfLetters":null,
+                "Name":"Ranura Ashvin dissanayake",
+                "$$hashKey":"object:15"
+            },
+            {
+                "Availability":"Yes",
+                "Status":"Approved",
+                "No":"4",
+                "@rid":"#804:58",
+                "ActionType":"",
+                "Address":"Kiribathgoda",
+                "Telephone":"0112255448",
+                "ProductType":"Auto_Loans",
+                "NoOfLetters":null,
+                "Name":"Tharidu Sadakalum",
+                "$$hashKey":"object:16"
+            },
+            {
+                "Availability":"No",
+                "Status":"Approved",
+                "No":"5",
+                "@rid":"#804:59",
+                "ActionType":"",
+                "Address":"Colombo7",
+                "Telephone":"077112233445",
+                "ProductType":"Branch_Credit",
+                "NoOfLetters":null,
+                "Name":"Nalini Damsara Weerasingha",
+                "$$hashKey":"object:17"
+            },
+            {
+                "Availability":"No",
+                "Status":"Approved",
+                "No":"5",
+                "@rid":"#804:60",
+                "ActionType":"",
+                "Address":"Colombo7",
+                "Telephone":"\t077112233445",
+                "ProductType":"Branch_Credit",
+                "NoOfLetters":null,
+                "Name":"Nalini Damsara Weerasingha",
+                "$$hashKey":"object:18"
+            },
+            {
+                "Availability":"Yes",
+                "Status":"Approved",
+                "No":"6",
+                "@rid":"#804:61",
+                "ActionType":"",
+                "Address":"Colombo 11",
+                "Telephone":"0112255448",
+                "ProductType":"Cards",
+                "NoOfLetters":8,
+                "Name":"abc",
+                "$$hashKey":"object:19"
+            },
+            {
+                "Availability":"No",
+                "Status":"Approved",
+                "No":"7",
+                "@rid":"#804:62",
+                "ActionType":"",
+                "Address":"Colombo 11",
+                "Telephone":"0112255448",
+                "ProductType":"Cards",
+                "NoOfLetters":4,
+                "Name":"Dilshani Bandara",
+                "$$hashKey":"object:20"
+            },
+            {
+                "No":1491232228161,
+                "Name":"ffff",
+                "Availability":"Yes",
+                "ProductType":"Cards",
+                "Telephone":"111111111111",
+                "Address":"gggggggggggggggggg",
+                "Status":"Pending Approval",
+                "ActionType":"New Record",
+                "$$hashKey":"object:30"
+            },
+            {
+                "No":"2",
+                "Name":"Samira Madusanka",
+                "Availability":"Yes",
+                "ProductType":"Cards",
+                "Telephone":"111111111",
+                "Address":"Kiribathgoda",
+                "Status":"Pending Approval",
+                "ActionType":"Updated Record",
+                "$$hashKey":"object:32"
+            },
+            {
+                "No":"2",
+                "Name":"Samira Madusanka",
+                "Availability":"Yes",
+                "ProductType":"Housing_Loans",
+                "Telephone":"111111111",
+                "Address":"Kiribathgoda",
+                "Status":"Pending Approval",
+                "ActionType":"Updated Record",
+                "$$hashKey":"object:33"
+            }
+        ];
+
+        $scope.giveApprovalToOne = function (val) {
+            val.Status = "Approve";
+        }
+
+        $scope.RejectApprovalToOne = function (val) {
+            val.Status = "Reject";
+        }
+
+        $scope.approveAll = function () {
+            for(var i=0; i<$scope.lawyers.length;i++){
+
+                $scope.lawyers[i].Status = "Approve";
+
+
+            }
+            console.log($scope.lawyers);
+        }
+
+        $scope.RemoveAll = function () {
+            for(var i=0; i<$scope.lawyers.length;i++){
+
+                $scope.lawyers[i].Status = "Reject";
+
+            }
+            console.log($scope.lawyers);
+        }
+
+
+    });
+
+
+</script>
+
+
+</html>

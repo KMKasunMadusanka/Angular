@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dynatable/0.3.1/jquery.dynatable.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.3/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Dynatable/0.3.1/jquery.dynatable.js"></script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <div class="page-header">
+        <h1 class="text-info">Lawyer Details Management</h1>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover" id="data-table">
+                    <thead>
+                        <tr style="color: #ffffff;">
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Product Type</th>
+                            <th>Availability</th>
+                            <th>Phone Number</th>
+                            <th>Address</th>
+                            <th class="text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="lawyer in lawyers">
+                            <td>{{lawyer.No}}</td>
+                            <td>{{lawyer.Name}}</td>
+                            <td>{{lawyer.ProductType}}</td>
+                            <td>{{lawyer.Availability}}</td>
+                            <td>{{lawyer.Telephone}}</td>
+                            <td>{{lawyer.Address}}</td>
+                            <td class="text-center">
+                                <button  class="btn btn-success btn-sm" ng-click="">Approve <span class="glyphicon glyphicon-ok"></span></button>
+                                <button  class="btn btn-danger btn-sm" ng-click="">Reject <span class="glyphicon glyphicon-remove"></span></button>
+                            </td>
+
+                        </tr>
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+<script>
+    angular.module("MainModule",[]).controller("MainController",function ($scope){
+
+        $scope.pendingBucket=[
+            {"No":"6","Name":"Janaka Chathuranga","Availability":"Yes","ProductType":"Housing_Loans","Telephone":"011223344556","Address":"Colombo"}
+        ]
+
+        $scope.lawyers=[
+            {"No":"1","Name":"Janaka Chathuranga","Availability":"Yes","ProductType":"Cards","Telephone":"011223344556","Address":"Colombo"},
+            {"No":"2","Name":"Mekala Rashmika","Availability":"No","ProductType":"Personal_Loan","Telephone":"011223344556","Address":"Colombo"},
+            {"No":"3","Name":"Yoshani Kavindya","Availability":"No","ProductType":"Branch_Credit","Telephone":"011223344556","Address":"Colombo"},
+            {"No":"4","Name":"Hashan Buddhima","Availability":"Yes","ProductType":"Auto_Loans","Telephone":"011223344556","Address":"Colombo"},
+            {"No":"5","Name":"Ashani Dikowita","Availability":"No","ProductType":"Cards","Telephone":"011223344556","Address":"Colombo"},
+        ];
+
+
+
+        //Add lawyer to the table
+
+        $scope.TempObj={};
+        $scope.EditedData={};
+
+        $scope.AddLawyers=function () {
+
+            if($scope.LawyerDetails.ProductType1){
+
+                $scope.TempObj={
+                    "No":Date.now(),
+                    "Name":$scope.LawyerDetails.Name,
+                    "Availability":$scope.LawyerDetails.Availability,
+                    "ProductType": "Cards",
+                    "Telephone":$scope.LawyerDetails.Telephone,
+                    "Address": $scope.LawyerDetails.Address
+                };
+                console.log( $scope.TempObj);
+                $scope.lawyers.push($scope.TempObj);
+            }
+
+            if($scope.LawyerDetails.ProductType2){
+
+                $scope.TempObj={
+                    "No":Date.now(),
+                    "Name":$scope.LawyerDetails.Name,
+                    "Availability":$scope.LawyerDetails.Availability,
+                    "ProductType": "Housing_Loans",
+                    "Telephone":$scope.LawyerDetails.Telephone,
+                    "Address": $scope.LawyerDetails.Address
+                };
+                console.log( $scope.TempObj);
+                $scope.lawyers.push($scope.TempObj);
+            }
+
+            if($scope.LawyerDetails.ProductType3){
+
+                $scope.TempObj={
+                    "No":Date.now(),
+                    "Name":$scope.LawyerDetails.Name,
+                    "Availability":$scope.LawyerDetails.Availability,
+                    "ProductType": "Personal_Loans",
+                    "Telephone":$scope.LawyerDetails.Telephone,
+                    "Address": $scope.LawyerDetails.Address
+                };
+                console.log( $scope.TempObj);
+                $scope.lawyers.push($scope.TempObj);
+            }
+            if($scope.LawyerDetails.ProductType4){
+
+                $scope.TempObj={
+                    "No":Date.now(),
+                    "Name":$scope.LawyerDetails.Name,
+                    "Availability":$scope.LawyerDetails.Availability,
+                    "ProductType": "Auto_Loans",
+                    "Telephone":$scope.LawyerDetails.Telephone,
+                    "Address": $scope.LawyerDetails.Address
+                };
+                console.log( $scope.TempObj);
+                $scope.lawyers.push($scope.TempObj);
+            }
+            if($scope.LawyerDetails.ProductType5){
+
+                $scope.TempObj={
+                    "No":Date.now(),
+                    "Name":$scope.LawyerDetails.Name,
+                    "Availability":$scope.LawyerDetails.Availability,
+                    "ProductType": "Branch_Credit",
+                    "Telephone":$scope.LawyerDetails.Telephone,
+                    "Address": $scope.LawyerDetails.Address
+                };
+                console.log( $scope.TempObj);
+                $scope.lawyers.push($scope.TempObj);
+            }
+            $scope.LawyerDetails={};
+            // $scope.LawyerDetails.refreshItems();
+
+
+        }
+
+
+
+        //Delete lawyer from the table
+        $scope.DeleteData = function (val) {
+            $scope.lawyers.splice($scope.lawyers.indexOf(val),1);
+        }
+
+
+        //Edit data
+        $scope.EditData = function (val) {
+            //assign previous data before editing
+            $scope.EditedData = val;
+
+            $scope.LawyerDetails = {};
+            $scope.LawyerDetails.Name = val.Name;
+            $scope.LawyerDetails.Telephone = val.Telephone;
+            $scope.LawyerDetails.Address = val.Address;
+            $scope.LawyerDetails.Availability = val.Availability;
+
+            console.log(val.ProductType);
+
+            if(val.ProductType=="Cards"){
+                $scope.LawyerDetails.ProductType1 = true;
+            }
+            if(val.ProductType=="Housing_Loans"){
+                $scope.LawyerDetails.ProductType2 = true;
+            }
+            if(val.ProductType=="Personal_Loan"){
+                $scope.LawyerDetails.ProductType3 = true;
+            }
+            if(val.ProductType=="Auto_Loans"){
+                $scope.LawyerDetails.ProductType4 = true;
+            }
+            if(val.ProductType=="Branch_Credit"){
+                $scope.LawyerDetails.ProductType5 = true;
+            }
+
+//                $scope.LawyerDetails.ProductType=[val.ProductType];
+            console.log($scope.LawyerDetails);
+        }
+
+        //Update the table
+        $scope.UpdateTable=function () {
+
+            if($scope.LawyerDetails.Name!=undefined){
+                $scope.lawyers.splice($scope.lawyers.indexOf($scope.EditedData),1);
+            }
+
+
+
+            if($scope.LawyerDetails.ProductType1){
+
+                $scope.TempObj={
+                    "No":$scope.EditedData.No,
+                    "Name":$scope.LawyerDetails.Name,
+                    "Availability":$scope.LawyerDetails.Availability,
+                    "ProductType": "Cards",
+                    "Telephone":$scope.LawyerDetails.Telephone,
+                    "Address": $scope.LawyerDetails.Address
+                };
+                console.log( $scope.TempObj);
+                $scope.lawyers.push($scope.TempObj);
+            }
+
+            if($scope.LawyerDetails.ProductType2){
+
+                $scope.TempObj={
+                    "No":$scope.EditedData.No,
+                    "Name":$scope.LawyerDetails.Name,
+                    "Availability":$scope.LawyerDetails.Availability,
+                    "ProductType": "Housing_Loans",
+                    "Telephone":$scope.LawyerDetails.Telephone,
+                    "Address": $scope.LawyerDetails.Address
+                };
+                console.log( $scope.TempObj);
+                $scope.lawyers.push($scope.TempObj);
+            }
+
+            if($scope.LawyerDetails.ProductType3){
+
+                $scope.TempObj={
+                    "No":$scope.EditedData.No,
+                    "Name":$scope.LawyerDetails.Name,
+                    "Availability":$scope.LawyerDetails.Availability,
+                    "ProductType": "Personal_Loans",
+                    "Telephone":$scope.LawyerDetails.Telephone,
+                    "Address": $scope.LawyerDetails.Address
+                };
+                console.log( $scope.TempObj);
+                $scope.lawyers.push($scope.TempObj);
+            }
+            if($scope.LawyerDetails.ProductType4){
+
+                $scope.TempObj={
+                    "No":$scope.EditedData.No,
+                    "Name":$scope.LawyerDetails.Name,
+                    "Availability":$scope.LawyerDetails.Availability,
+                    "ProductType": "Auto_Loans",
+                    "Telephone":$scope.LawyerDetails.Telephone,
+                    "Address": $scope.LawyerDetails.Address
+                };
+                console.log( $scope.TempObj);
+                $scope.lawyers.push($scope.TempObj);
+            }
+            if($scope.LawyerDetails.ProductType5){
+
+                $scope.TempObj={
+                    "No":$scope.EditedData.No,
+                    "Name":$scope.LawyerDetails.Name,
+                    "Availability":$scope.LawyerDetails.Availability,
+                    "ProductType": "Branch_Credit",
+                    "Telephone":$scope.LawyerDetails.Telephone,
+                    "Address": $scope.LawyerDetails.Address
+                };
+                console.log( $scope.TempObj);
+                $scope.lawyers.push($scope.TempObj);
+            }
+            $scope.LawyerDetails={};
+            // $scope.LawyerDetails.refreshItems();
+            console.log($scope.lawyers);
+        }
+
+
+        //print the final output
+        console.log($scope.lawyers);
+
+    });
+
+</script>
+</html>

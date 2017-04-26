@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html ng-app="MainModule">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dynatable/0.3.1/jquery.dynatable.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.3/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Dynatable/0.3.1/jquery.dynatable.js"></script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
+
+
+
+
+    <meta charset="UTF-8">
+
+
+
+    <title>Letter of Demand Lawyer Attendance Detail</title>
+</head>
+<body ng-controller="MainController">
+<div class="container">
+
+    <div class="page-header">
+        <h2 class="text-info">Lawyer Details Management</h2>
+    </div>
+<div class="well well-lg">
+    <div class="container-fluid">
+        <h3><strong>Add or edit lawyer details</strong></h3>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input class="form-control" ng-model="LawyerDetails.Name">
+                    </div>
+                </div>
+
+
+                <div class="col-md-6" >
+                    <div class="form-group">
+                        <label>Telephone</label>
+                        <input class="form-control" ng-model="LawyerDetails.Telephone">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Address</label>
+                        <textarea rows="5" class="form-control" ng-model="LawyerDetails.Address"></textarea>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+
+                            <label>Product Type</label><br>
+
+                            <select class="selectpicker" id="multi-drop" multiple class="form-group"  ng-model="LawyerDetails.ProductType">
+
+                                <option>Cards</option>
+                                <option>Housing_Loans</option>
+                                <option>Personal_Loans</option>
+                                <option>Auto_Loans</option>
+                                <option>Branch_Credit</option>
+                            </select>
+
+                    </div>
+                    <div class="form-group">
+                        <label>Availability</label>
+                        <div class="checkbox">
+                            <label class="radio-inline"><input type="radio" value="Yes" name="availability" ng-model="LawyerDetails.Availability">Yes</label>
+                            <label class="radio-inline"><input type="radio" value="No" name="availability" ng-model="LawyerDetails.Availability">No</label>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group pull-right">
+                    <button class="btn btn-success" ng-click="addData()">Add</button>
+                    <button class="btn btn-warning" >Update</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="page-header">
+        <h3> <strong>View lawyer details</strong></h3>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover" id="data-table">
+
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Product Type</th>
+                        <th>Availability</th>
+                        <th>Phone Number</th>
+                        <th>Address</th>
+                        <th>Edit Details</th>
+                        <th>Delete</th>
+                    </tr>
+
+
+
+                    <tr ng-repeat="lawyer in lawyers">
+                        <td>{{lawyer.No}}</td>
+                        <td>{{lawyer.Name}}</td>
+                        <td>{{lawyer.ProductType}}</td>
+                        <td>{{lawyer.Availability}}</td>
+                        <td>{{lawyer.Telephone}}</td>
+                        <td>{{lawyer.Address}}</td>
+                        <td style="text-align: center">
+                            <button  class="btn btn-default btn-sm glyphicon glyphicon-pencil " ng-click="EditData(lawyer)">Edit</button>
+                        </td>
+                        <td style="text-align: center">
+                            <button  class="btn btn-default btn-sm glyphicon glyphicon-remove" ng-click="DeleteData(lawyer)">Delete</button>
+                        </td>
+
+                    </tr>
+
+
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    $('#data-table').dynatable();
+    $('#multi-drop').selectize();
+</script>
+
+
+
+</body>
+
+    <script>
+        angular.module("MainModule",[]).controller("MainController",function ($scope){
+
+            $scope.lawyers=[
+                {"No":"1","Name":"Janaka Chathuranga","Availability":"Yes","ProductType":"Cards","Telephone":"011223344556","Address":"Colombo"},
+                {"No":"2","Name":"Mekala Rashmika","Availability":"No","ProductType":"Personal_Loan","Telephone":"011223344556","Address":"Colombo"},
+                {"No":"3","Name":"Yoshani Kavindya","Availability":"No","ProductType":"Branch_Credit","Telephone":"011223344556","Address":"Colombo"},
+                {"No":"4","Name":"Hashan Buddhima","Availability":"Yes","ProductType":"Auto_Loan","Telephone":"011223344556","Address":"Colombo"},
+                {"No":"5","Name":"Ashani Dikowita","Availability":"No","ProductType":"Cards","Telephone":"011223344556","Address":"Colombo"},
+                {"No":"6","Name":"Janaka Chathuranga","Availability":"Yes","ProductType":"Housing","Telephone":"011223344556","Address":"Colombo"}
+            ];
+
+
+            $scope.categories={"category":["Cards","Housing_Loans","Personal_Loans","Auto_Loans","Branch_Credit"],"selected":[]}
+            $scope.editDataArr=[];
+            $scope.UpdateArray=[];
+            $scope.TempArr={};
+
+            //Add Data to the table
+            $scope.addData= function () {
+                $scope.editDataArr.push($scope.LawyerDetails);
+
+                for(var i =0;i<$scope.LawyerDetails.ProductType.length;i++){
+                    $scope.TempArr={
+                        "No":Date.now(),
+                        "Name":$scope.LawyerDetails.Name,
+                        "Availability":$scope.LawyerDetails.Availability,
+                        "ProductType":$scope.LawyerDetails.ProductType[i],
+                        "Telephone":$scope.LawyerDetails.Telephone,
+                        "Address": $scope.LawyerDetails.Address
+                    };
+
+                    $scope.lawyers.push($scope.TempArr);
+                    $scope.UpdateArray.push($scope.TempArr);
+
+                    $scope.LawyerDetails={};
+                    $scope.LawyerDetails.refreshItems();
+                    // $scope.LawyerDetails.ProductType.
+            }
+
+            }
+
+            //Delete data from the table
+
+            $scope.DeleteData = function (val) {
+                console.log(val);
+                $scope.lawyers.splice($scope.lawyers.indexOf(val),1);
+            }
+
+
+            //Edit data
+            $scope.EditData = function (val) {
+
+                $scope.LawyerDetails = {};
+                $scope.LawyerDetails.Name = val.Name;
+                $scope.LawyerDetails.Telephone = val.Telephone;
+                $scope.LawyerDetails.Address = val.Address;
+                $scope.LawyerDetails.Availability = val.Availability;
+                $scope.LawyerDetails.ProductType=[val.ProductType];
+                console.log($scope.LawyerDetails);
+            }
+
+
+            //print the final output
+            console.log($scope.lawyers);
+
+        });
+
+    </script>
+</html>

@@ -1,0 +1,190 @@
+<html ng-app="usertask">
+<base href="/">
+
+<head>
+    <!--BOOTSTRAP CSS IMPORT-->
+    <link rel="stylesheet" href="centroid-web/user-task-pages/dependency/css/bootstrap.min.css">
+    <!--CUSTOM CSS IMPORT-->
+    <link rel="stylesheet" href="centroid-web/user-task-pages/dependency/css/custom.css">
+    <!--ADD YOUR DEPENDENCIES (CSS)-->
+    <!--Q JS IMPORT-->
+    <script type="text/javascript" src="centroid-web/user-task-pages/dependency/js/q.js"></script>
+    <!--JQUERY JS IMPORT-->
+    <script type="text/javascript" src="centroid-web/user-task-pages/dependency/js/jquery-3.1.1.min.js"></script>
+    <!--BOOTSTRAP JS IMPORT-->
+    <script type="text/javascript" src="centroid-web/user-task-pages/dependency/js/bootstrap.min.js"></script>
+    <!--ANGULAR JS IMPORT-->
+    <script type="text/javascript" src="centroid-web/user-task-pages/dependency/js/angular.min.js"></script>
+    <!--ADD YOUR DEPENDENCIES (JS)-->
+    <!--DO NOT CHANGE OR DELETE-->
+    <!--SPEED JS IMPORT-->
+    <script type="text/javascript" src="centroid-web/user-task-pages/dependency/js/speedservices.js"></script>
+    <!--DO NOT CHANGE OR DELETE-->
+    <!--ANGULAR MODULE-->
+    <script type="text/javascript">
+        var usertask = angular.module('usertask', []);
+    </script>
+    <!--DO NOT CHANGE OR DELETE-->
+    <!--ACCELLO CONFIG-->
+    <script type="text/javascript" src="centroid-web//config.js"></script>
+    <!--ANGULAR CONFIG-->
+    <script type="text/javascript" src="centroid-web/user-task-pages/dependency/js/angular/config.js"></script>
+    <!--CUSTOM JS IMPORT-->
+    <script type="text/javascript" src="centroid-web/user-task-pages/dependency/js/custom.js"></script>
+    <!--DO NOT CHANGE OR DELETE-->
+    <!--ANGULAR CONTROLLER-->
+    <script type="text/javascript">
+        usertask.controller('UserTaskController', function($scope, $accello) { /*------------------- DO NOT CHANGE OR DELETE -------------------*/
+            $scope.inputParam = {};
+            $scope.inputs = [];
+            $scope._init = function() {
+                $accello._init().then(function(data) {
+                    $scope.inputParam = data._input;
+                }, function(err) {
+                    console.error(err);
+                });
+            };
+            $scope._save = function() {
+
+                $scope.inputs[0]
+
+                $accello._save($scope.inputs);
+
+
+            }; /*------------------- DO NOT CHANGE OR DELETE -------------------*/ /*---------- ADD YOUR CONTROLLER CODE HERE ------------*/
+
+            $scope.arrayToString = function(string){
+                return string.join(", ");
+            };
+
+            $scope.lawyers = [{
+                "Id": "1",
+                "Name": "Janaka Chathuranga",
+                "availability": true,
+                "category": "Cards_Non_WOFF"
+            }, {
+                "Id": "2",
+                "Name": "Mekala Rashmika",
+                "availability": false,
+                "category": "Personal_Loan_Non_WOFF"
+            }, {
+                "Id": "3",
+                "Name": "Yoshani Kavindya",
+                "availability": false,
+                "category": "Personal_Non_WOFF"
+            }, {
+                "Id": "4",
+                "Name": "Hashan Buddhima",
+                "availability": true,
+                "category": "Auto_Loan_Non_WOFF"
+            }, {
+                "Id": "5",
+                "Name": "Ashani Dikowita",
+                "availability": false,
+                "category": "Cards_Non_WOFF"
+            }, {
+                "Id": "6",
+                "Name": "Janaka Chathuranga",
+                "availability": true,
+                "category": "Housing_Non_WOFF"
+            }
+
+            ];
+
+            $scope.persentLawyers = [{
+                "Name": "Prabath Udayanga"
+            }, {
+                "Name": "Dilshani Bandara"
+            }, {
+                "Name": "Ranura Ashvin disssanayake"
+            }];
+
+        });
+    </script>
+</head>
+
+<body ng-controller="UserTaskController" ng-init="_init()">
+<div>
+    <br />
+    <div class="container">
+        <h1 style="font-family: sans-serif; color: midnightblue;">Letter of Demand Lawyer Attendance</h1>
+    </div>
+    <br />
+    <div>
+        <div class="container">
+            <table class="table table-striped">
+                <tbody>
+                <tr>
+                    <td style="width: 50%;">
+                        <p><b> Select Lawyer Product Type :    <select ng-model="searchContent.category">
+                            <option value="">All product type</option>
+                            <option value="Cards_Non_WOFF">Cards_Non_WOFF</option>
+                            <option value="Personal_Non_WOFF">Personal_Non_WOFF</option>
+                            <option value="Housing_Non_WOFF">Housing_Non_WOFF</option>
+                            <option value="Auto_Loan_Non_WOFF">Auto_Loan_Non_WOFF</option>
+                            <option value="Personal_Loan_Non_WOFF">Personal_Loan_Non_WOFF</option>
+                        </select></b></p>
+                    </td>
+                    <td>
+                        <p><b> Availability :    <select ng-model="searchContent.availability">
+                            <option value="">All</option>
+                            <option value="true">Yes</option>
+                            <option value="false">No</option>
+                        </select></b></p>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <br />
+        <br />
+        <div class="container">
+            <table ng-model="TableView" class="table table-striped">
+                <tbody>
+                <tr>
+                    <th>ID</th>
+                    <th>Name Of the Lawyer</th>
+                    <th>Product Type</th>
+                    <th>Availability</th>
+                    <!--<th>Replacement</th>-->
+                    <th>Add to category</th>
+                    <th>Remove from current product type</th>
+                </tr>
+                <tr ng-repeat="lawyer in inputParam['TableJSON'] | filter:searchContent">
+                    <td>{{lawyer.No}}</td>
+                    <td>{{lawyer.Name}}</td>
+                    <td>{{lawyer.Temporary_Category}}</td>
+                    <td>
+                        <input type="radio" name="{{lawyer.Name+lawyer.No}}" ng-checked="lawyer.Availability==true" />Yes
+                        <input type="radio" name="{{lawyer.Name+lawyer.No}}" ng-checked="lawyer.Availability==false" />No</td>
+                    <td>
+                        <select ng-model="OutputData.lawyerName">
+                            <option value="">Select the Lawyer</option>
+                            <option ng-repeat="lawyers in persentLawyers ">{{lawyers.Name}}</option>
+                        </select>
+                        <br />
+                        <input type="radio" ng-model="OutputData.add" name="{{lawyer.Availability+lawyer.No}}" />Assign to this product type
+                        <br />
+                        <input type="radio" ng-model="OutputData.add" name="{{lawyer.Availability+lawyer.No}}" />Assign to both product types</td>
+                    <td style="text-align: center;">
+                        <input type="checkbox" ng-model="OutputData.delete" name="{{lawyer.Temporary_Category+lawyer.No}}" />
+                        <br /> {{OutputData}}
+                    {{inputParam}}
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div style="position: fixed; left: 0px; bottom: 0px; height: 60px; width: 100%; background: #D0D0D0; padding: 15px; display: table;">
+    <div style="font-size: 15px; font-weight: bold; color: #3e4eb8;">Accello Usertask Template</div>
+    <div style="font-size: 12px; font-style: italic;">© Virtusa | Polaris</div>
+    <div style="display: table-cell; vertical-align: middle;">
+        <div style="position: absolute; width: 20%;"><span id="usertaskMsgHeaderSpan" style="font-weight: bold;"></span><span id="usertaskMsgContentSpan" style="word-wrap: break-word; font-size: 11px; letter-spacing: 0.5px;"></span></div>
+        <button style="vertical-align: middle; display: block; width: 40%; margin: 0 auto; padding: 5px 10px; border-radius: 5px; background: #3E4EB8; color: #fff; outline: none; float: right;" type="button" ng-click="_save(OutputData)">Perform Task</button>
+    </div>
+</div>
+</body>
+
+</html>

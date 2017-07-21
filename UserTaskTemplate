@@ -1,0 +1,219 @@
+# Angular
+
+<html ng-app="usertask">
+<base href="/">
+
+<head>
+    <!--SWEETALERT CSS IMPORT-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.css">
+    <!--AJAX CSS IMPORT-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dynatable/0.3.1/jquery.dynatable.css">
+    <!--BOOTSTRAP CSS IMPORT-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!--CUSTOM CSS IMPORT-->
+    <link rel="stylesheet" href="centroid-web/user-task-pages/dependency/css/custom.css">
+    <!--ADD YOUR DEPENDENCIES (CSS)-->
+    <!--Q JS IMPORT-->
+    <script type="text/javascript" src="centroid-web/user-task-pages/dependency/js/q.js"></script>
+    <!--JQUERY JS IMPORT-->
+    <script type="text/javascript" src="centroid-web/user-task-pages/dependency/js/jquery-3.1.1.min.js"></script>
+    <!--BOOTSTRAP JS IMPORT-->
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!--ANGULAR JS IMPORT-->
+    <script type="text/javascript" src="centroid-web/user-task-pages/dependency/js/angular.min.js"></script>
+    <!--ADD YOUR DEPENDENCIES (JS)-->
+    <!--DO NOT CHANGE OR DELETE-->
+    <!--SPEED JS IMPORT-->
+    <script type="text/javascript" src="centroid-web/user-task-pages/dependency/js/speedservices.js"></script>
+    <!--AJAX JS IMPORT-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>
+    <!--SWEETALERT CSS IMPORT-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.js"></script>
+    <!--DO NOT CHANGE OR DELETE-->
+    <!--ANGULAR MODULE-->
+    <script type="text/javascript">
+        var usertask = angular.module('usertask', []);
+    </script>
+    <!--DO NOT CHANGE OR DELETE-->
+    <!--ACCELLO CONFIG-->
+    <script type="text/javascript" src="centroid-web//config.js"></script>
+    <!--ANGULAR CONFIG-->
+    <script type="text/javascript" src="centroid-web/user-task-pages/dependency/js/angular/config.js"></script>
+
+    <!--CUSTOM JS IMPORT-->
+    <script type="text/javascript" src="centroid-web/user-task-pages/dependency/js/custom.js"></script>
+    <!--DO NOT CHANGE OR DELETE-->
+    <!--ANGULAR CONTROLLER-->
+    <script type="text/javascript">
+        usertask.controller('UserTaskController', function($scope, $accello) { /*------------------- DO NOT CHANGE OR DELETE -------------------*/
+            $scope.inputParam = {};
+            $scope.inputs = [];
+            $scope._init = function() {
+                $accello._init().then(function(data) {
+                    $scope.inputParam = data._input;
+						
+                    $scope.inputParam['ProjectData'] = JSON.parse($scope.inputParam['ProjectData']);
+                    $scope.Project = $scope.inputParam['ProjectData'];
+					$scope.EmployeeArray= $scope.inputParam['EmployeeData'];
+					
+					console.log($scope.Project);
+                    console.log($scope.EmployeeArray);
+					
+                }, function(err) {
+                    console.error(err);
+                });
+            };
+            $scope._save = function(employee) {
+                $scope.inputs[0]=JSON.stringify(employee);
+                $accello._save($scope.inputs);
+            }; /*------------------- DO NOT CHANGE OR DELETE -------------------*/ /*---------- ADD YOUR CONTROLLER CODE HERE ------------*/
+
+			/*$scope.EmployeeArray = [{"@rid":"#-2:0","FullName":"Dhananjaya Rathnayake",
+			"EmployeeNumber":"8010245"},{"@rid":"#-2:1","FullName":"Kosala Sri Manamendra Samarasinghe",
+			"EmployeeNumber":"8005438"},{"@rid":"#-2:2","FullName":"Harshani Lakmali","EmployeeNumber":"8003233"},
+			{"@rid":"#-2:3","FullName":"Mahesha Harshani","EmployeeNumber":"8015252"}];
+			*/
+			
+			/*
+			$scope.Project = [
+					{
+						"ProjectId":"1",
+						"ProjectName":"RPA"
+					},
+					{
+						"ProjectId":"1",
+						"ProjectName":"Flex"
+					}
+					
+			];
+			*/
+			
+			//create Employee number Array
+			
+				$scope.EmployeeNumberArr=[];
+				$scope.uniqueNumberArr=[];
+				
+				for(var i=0;i<$scope.EmployeeArray.length;i++){
+					$scope.EmployeeNumberArr.push($scope.EmployeeArray[i].EmployeeNumber); 
+
+				}
+				$scope.uniqueNumberArr = $scope.EmployeeNumberArr.filter(function(elem, index, self) {
+					return index == self.indexOf(elem);
+				});
+			//create employee name
+			$scope.makeEmployeeName=function(empNo){
+			
+			
+				 for(var i=0;i<$scope.EmployeeArray.length;i++)
+					{
+						if($scope.EmployeeArray[i].EmployeeNumber == empNo){            
+													
+							$scope.Employee.Name=$scope.EmployeeArray[i].FullName;
+							
+												
+						}
+					}
+			
+			
+			}
+			
+			//create Project Array
+			 $scope.projctArray=[];
+			 
+				for(var i=0;i<$scope.Project.length;i++){
+					$scope.projctArray.push($scope.Project[i].ProjectName); 
+					
+				}
+				
+			$scope.Output=[];
+				
+			$scope.SetData=function(employee){
+				
+				$scope.Output=employee;
+					
+			}
+				
+			
+            
+        });
+    </script>
+
+</head>
+
+<body ng-controller="UserTaskController" ng-init="_init()">
+
+<div class="container">
+
+    <div class="page-header">
+        <h2 class="text-info">Add New Employee</h2>
+    </div>
+    <div class="well well-lg">
+        <div class="container-fluid">
+            
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="col-md-12">
+                        <div class="form-group col-md-6">
+                            <label>Employee Number</label>
+                            <select class="form-control" ng-model="Employee.Number" id="txtEmployeeName" ng-options="x for x in uniqueNumberArr" ng-change="makeEmployeeName(Employee.Number)">
+								<option value="" disabled="disabled" selected="selected">Please select Employee Number</option>
+							</select>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-12">
+                        <div class="form-group col-md-6">
+                            <label>Employee Name</label>
+                            <input class="form-control" ng-model="Employee.Name" id="txtEmpName" disabled>
+                        </div>
+                    </div>
+                   
+
+				   <div class="col-md-12">
+
+
+                        <div class="form-group">
+                            <div class="form-group col-md-6">
+                            <label>Project</label>
+							    <select class="form-control" ng-model="Employee.project" ng-options="x for x in projctArray">
+								 <option value="" disabled="disabled" selected="selected">Please select Project</option>
+								</select>
+                            </div>
+                        </div>
+                    </div>
+					
+                    <div class=" form-group">
+                    
+						<div class=" col-md-12 ">
+                            <label class="col-md-2" >External Allocation </label>
+							<div class="col-md-2">
+							<input type="checkbox" value="Yes" name="ExternalAllocation" ng-model="Employee.ExternalAllocation" id="ExternalAllocation">
+							</div>
+						</div>
+					   
+                    
+                </div>
+				
+		
+            </div>
+            
+
+        </div>
+    </div>
+
+    
+</div>
+
+</div>
+
+<div style="left: 0px; bottom: 0px; height: 60px; width: 100%; background: #D0D0D0; padding: 15px; display: table;">
+<div style="font-size: 15px; font-weight: bold; color: #3e4eb8;">Accello Usertask Template</div>
+<div style="font-size: 12px; font-style: italic;">Â© Virtusa | Polaris</div>
+<div style="display: table-cell; vertical-align: middle;">
+<div style="position: absolute; width: 20%;"><span id="usertaskMsgHeaderSpan" style="font-weight: bold;"></span><span id="usertaskMsgContentSpan" style="word-wrap: break-word; font-size: 11px; letter-spacing: 0.5px;"></span></div>
+<button style="vertical-align: middle; display: block; width: 40%; margin: 0 auto; padding: 5px 10px; border-radius: 5px; background: #3E4EB8; color: #fff; outline: none; float: right;" type="button" ng-click="_save(Employee)">Perform Task</button></div>
+</div>
+</body>
+
+</html>
